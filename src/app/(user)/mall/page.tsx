@@ -233,7 +233,7 @@ export default function MallPage() {
                     onClick={() => setSelectedProduct(product)}
                     disabled={isDisabled}
                     size="sm"
-                    className="w-full bg-white text-black hover:bg-white/90 font-medium"
+                    className="w-full btn-primary"
                   >
                     {isOutOfStock ? "已售罄" : !canAfford ? "积分不足" : "兑换"}
                   </Button>
@@ -300,7 +300,7 @@ export default function MallPage() {
             <Button
               onClick={handleRedeem}
               disabled={redeeming}
-              className="bg-white text-black hover:bg-white/90 font-medium"
+              className="btn-primary"
             >
               {redeeming ? "兑换中..." : "确认兑换"}
             </Button>

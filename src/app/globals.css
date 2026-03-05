@@ -3,73 +3,42 @@
 @tailwind utilities;
 
 /* =====================================================
-   苹果风格 + 宇宙主题
-   纯黑背景 + 巨大月亮 + 简洁精致
+   STEPs - Electric Cyan Theme
+   纯黑背景 + 网格纹理 + 巨大月亮
    ===================================================== */
 
 @layer base {
   :root {
-    /* 苹果风格浅色模式 */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-
-    --primary: 0 0% 10%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 10%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 10%;
-
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    /* 宇宙深色模式 - 纯黑+月亮 */
+    /* Dark mode - Electric Cyan */
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
-    --card: 0 0% 8%;
+    --card: 0 0% 5%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 8%;
+    --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 0 0% 100%;
+    --primary: 189 100% 42%; /* Electric Cyan */
     --primary-foreground: 0 0% 0%;
 
-    --secondary: 0 0% 15%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 15%;
+    --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
 
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 189 100% 42%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 189 100% 42%;
+
+    --radius: 0.75rem;
   }
 }
 
@@ -80,33 +49,28 @@
 
   body {
     @apply text-foreground font-sans;
-    /* 纯黑背景 - 无渐变，无星星 */
-    background: #000000;
+    background: #0a0a0f;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
   }
 
+  /* 网格背景 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    pointer-events: none;
+    z-index: 0;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
-    @apply font-semibold tracking-tight;
-  }
-
-  /* 苹果风格文字 */
-  .apple-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight;
-  }
-
-  .apple-headline {
-    @apply text-2xl md:text-3xl font-semibold tracking-tight;
-  }
-
-  .apple-body {
-    @apply text-base leading-relaxed;
-  }
-
-  .apple-caption {
-    @apply text-sm text-white/60;
+    @apply font-bold tracking-tight;
   }
 }
 
@@ -126,49 +90,23 @@
 }
 
 /* =====================================================
-   动画
-   ===================================================== */
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out;
-}
-
-/* 苹果风格过渡 */
-.apple-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* =====================================================
-   苹果风格卡片
+   卡片样式
    ===================================================== */
 
 .apple-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.1);
   border-radius: 1rem;
-}
-
-.apple-card-hover {
-  @apply apple-transition;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .apple-card-hover:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.1);
 }
 
 /* =====================================================
@@ -180,47 +118,56 @@
   z-index: 10;
 }
 
-/* 确保所有内容在背景之上 */
-#__next,
-div[data-rdm] {
-  position: relative;
-  z-index: 10;
-}
-
 /* =====================================================
    渐变文字
    ===================================================== */
 
 .cosmic-gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+  background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* =====================================================
-   实用类
+   按钮样式
    ===================================================== */
 
-.container-apple {
-  @apply max-w-4xl mx-auto px-6;
+.btn-primary {
+  @apply px-6 py-3 rounded-full font-semibold transition-all duration-200;
+  background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
 }
 
-/* 苹果风格按钮 */
-.apple-button {
-  @apply px-6 py-3 rounded-full font-medium transition-all duration-200;
-  @apply hover:scale-105 active:scale-95;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
 }
 
-/* 文字对比度增强 */
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =====================================================
+   文字对比度
+   ===================================================== */
+
 .text-high-contrast {
   color: rgba(255, 255, 255, 0.95);
 }
 
 .text-medium-contrast {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .text-low-contrast {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
 }

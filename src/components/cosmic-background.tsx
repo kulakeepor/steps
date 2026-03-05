@@ -1,14 +1,17 @@
 "use client";
 
 /**
- * 宇宙背景 - 纯黑+巨大月亮
+ * 宇宙背景 - 纯黑+巨大月亮+网格
  * 参考风格：孤独、静谧、银河系漫游
  */
 export function CosmicBackground() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {/* 纯黑背景 - 无渐变，无星星 */}
-      <div className="absolute inset-0 bg-[#000000]" />
+      {/* 纯黑背景 + 微妙渐变 */}
+      <div className="absolute inset-0 bg-[#0a0a0f]" />
+      
+      {/* 微妙的 cyan 渐变 - 增加深度 */}
+      <div className="absolute inset-0 bg-gradient-to-br from-electric-900/20 via-transparent to-electric-900/10" />
 
       {/* 巨大的月亮 - 占画面约60%，居中偏左 */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] min-w-[300px] min-h-[300px]">

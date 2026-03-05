@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Outfit } from "next/font/google";
+import { Bricolage_Grotesque, Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { CosmicBackground } from "@/components/cosmic-background";
 
-const spaceGrotesk = Space_Grotesk({
+const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-space",
+  variable: "--font-display",
   display: "swap",
 });
 
 const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -27,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${spaceGrotesk.variable} ${outfit.variable}`}>
-      <body className={`${outfit.className} antialiased bg-[#0a0a1a] text-white`}>
+    <html lang="zh-CN" className={`${bricolageGrotesque.variable} ${outfit.variable}`}>
+      <body className={`${outfit.className} antialiased bg-[#0a0a0f] text-white`}>
         <CosmicBackground />
         <div className="cosmic-content">
           <Providers>{children}</Providers>
