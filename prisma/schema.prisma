@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum TaskStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum OrderStatus {
+  PENDING
+  APPROVED
+  SHIPPED
+  COMPLETED
+  REJECTED
+}
+
+enum TransactionType {
+  EARN      // 任务奖励
+  REDEEM    // 兑换消费
+  REFUND    // 退款返还
+}
+
+enum WishStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum NotificationType {
+  INFO
+  TASK
+  ORDER
+  SHIPMENT
+  WISH
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password      String
+  role          UserRole  @default(USER)
+  steps         Int       @default(0)
+  status        Boolean   @default(true)  // false = 禁用
+  loginAttempts Int       @default(0)
+  lockUntil     DateTime?
+  createdAt     DateTime  @default(now())
+  deleted       Boolean   @default(false)
+
+  taskSubmissions    TaskSubmission[]
+  orders             Order[]
+  wishes             Wish[]
+  stepTransactions   StepTransaction[]
+  notifications      Notification[]
+
+  @@map("users")
+}
+
+model Task {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  stepsReward  Int
+  sortOrder    Int
+  createdAt    DateTime @default(now())
+
+  submissions TaskSubmission[]
+
+  @@map("tasks")
+}
+
+model TaskSubmission {
+  id         String      @id @default(cuid())
+  userId     String
+  taskId     String
+  status     TaskStatus  @default(PENDING)
+  submittedAt DateTime    @default(now())
+  reviewedAt DateTime?
+  reviewedBy String?
+
+  user User @relation(fields: [userId], references: [id])
+  task Task @relation(fields: [taskId], references: [id])
+
+  @@unique([userId, taskId])
+  @@map("task_submissions")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  image       String
+  stepsPrice  Int
+  stock       Int
+  createdAt   DateTime @default(now())
+  deleted     Boolean  @default(false)
+
+  orders Order[]
+
+  @@map("products")
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  userId      String
+  productId   String
+  stepsCost   Int
+  status      OrderStatus @default(PENDING)
+  submittedAt DateTime    @default(now())
+  reviewedAt  DateTime?
+  shippedAt   DateTime?
+  completedAt DateTime?
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("orders")
+}
+
+model Wish {
+  id          String     @id @default(cuid())
+  userId      String
+  itemName    String     // 用户想要的物品名称
+  stepsCost   Int        // 用户愿意支付的 steps
+  status      WishStatus @default(PENDING)
+  submittedAt DateTime   @default(now())
+  reviewedAt  DateTime?
+  reviewedBy  String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("wishes")
+}
+
+model StepTransaction {
+  id          String          @id @default(cuid())
+  userId      String
+  amount      Int
+  type        TransactionType
+  description String
+  createdAt   DateTime        @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("step_transactions")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
