@@ -42,3 +42,8 @@ prisma/migrations/*_*/
 # OS
 Thumbs.db
 .vercel
+
+# Local scripts (contain sensitive data)
+create-admin.js
+setup-supabase.js
+test-db.js
